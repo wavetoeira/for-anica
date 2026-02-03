@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Anica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital@0;1&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vintage-blue: #4a677d;
+            --soft-blue: #a2c2d6;
+            --paper-cream: #fdfaf5;
+        }
+
+        body {
+            background: radial-gradient(circle, #1a2a3a 0%, #000000 100%);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+            color: var(--paper-cream);
+        }
+
+        /* Floating Atmosphere */
+        .heart {
+            position: absolute;
+            color: rgba(143, 179, 195, 0.2);
+            animation: float 12s infinite linear;
+            z-index: 0;
+        }
+        @keyframes float {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Envelope */
+        #envelope-stage { text-align: center; z-index: 10; transition: opacity 0.8s; }
+        .envelope-wrapper {
+            width: 350px; height: 230px;
+            background: var(--paper-cream);
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            border-radius: 4px;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .envelope-label {
+            width: 80%; height: 100px;
+            background: transparent; border: none;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem; color: var(--vintage-blue);
+            text-align: center; resize: none; overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .envelope-label:focus { outline: none; }
+        .rose-stamp {
+            position: absolute; bottom: 15px;
+            width: 55px; height: 55px;
+            background: #b53d3d; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; font-size: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 2px solid #8c2f2f;
+            transition: transform 0.3s;
+            z-index: 20;
+        }
+        .rose-stamp:hover { transform: scale(1.1); }
+
+        /* Reason Card */
+        #reasons-stage {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 100; justify-content: center; align-items: center;
+        }
+        .reason-card {
+            background: var(--paper-cream);
+            width: 320px; min-height: 250px; padding: 40px;
+            border-radius: 8px; text-align: center;
+            color: #333; border-top: 8px solid var(--vintage-blue);
+            box-shadow: 0 25px 60px rgba(0,0,0,1);
+            animation: slideIn 0.5s ease;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .reason-text { font-size: 1.25rem; margin: 30px 0; line-height: 1.6; }
+
+        /* Final Stage */
+        #bouquet-stage {
+            display: none; position: fixed; inset: 0;
+            background: white; z-index: 200;
+            flex-direction: column; justify-content: center; align-items: center;
+        }
+        .flower-window { text-align: center; animation: fadeIn 2s; }
+        .blue-flower {
+            font-size: 100px; display: inline-block;
+            filter: drop-shadow(0 0 15px var(--soft-blue));
+            animation: sway 4s infinite ease-in-out;
+        }
+        @keyframes sway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+
+        .btn {
+            padding: 12px 30px; background: var(--vintage-blue);
+            color: white; border: none; border-radius: 30px;
+            cursor: pointer; font-family: 'Quicksand'; font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn:hover { background: #34495e; transform: translateY(-2px); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="blue.mp3">
+        </audio>
+
+    <div id="hearts-container"></div>
+
+    <div id="envelope-stage">
+        <div class="envelope-wrapper">
+            <textarea class="envelope-label">For my only exception, my ever beloved, my Anica.</textarea>
+            <div class="rose-stamp" onclick="startExperience()">🌹</div>
+        </div>
+        <p style="margin-top: 25px; font-size: 0.75rem; letter-spacing: 3px; opacity: 0.6; font-family: 'Quicksand';">I worked hard for this little surprise, hehe.</p>
+<p style="margin-top: 25px; font-size: 0.75rem; letter-spacing: 3px; opacity: 0.6; font-family: 'Quicksand';">I hope this can make you smile.</p>
+<p style="margin-top: 25px; font-size: 0.75rem; letter-spacing: 3px; opacity: 0.6; font-family: 'Quicksand';">Turn up your phone's volume.</p>
+<p style="margin-top: 25px; font-size: 0.75rem; letter-spacing: 3px; opacity: 0.6; font-family: 'Quicksand';">Click the rose, baby!</p>
+    </div>
+
+    <div id="reasons-stage">
+        <div class="reason-card">
+            <div id="count-display" style="color: var(--vintage-blue); font-family: 'Quicksand'; font-size: 0.75rem; letter-spacing: 1px;"></div>
+            <div id="reason-display" class="reason-text"></div>
+            <button class="btn" onclick="nextReason()">Keep Reading →</button>
+        </div>
+    </div>
+
+    <div id="bouquet-stage">
+        <div id="final-question" style="text-align: center;">
+            <h1 style="font-family: 'Dancing Script'; font-size: 3.5rem; color: var(--vintage-blue);">Will you be my Valentine?</h1>
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+                <button class="btn" onclick="celebrate()">YES</button>
+                <button class="btn" onclick="celebrate()">YES</button>
+            </div>
+        </div>
+        
+        <div id="flower-window" style="display:none;" class="flower-window">
+            <div class="blue-flower">🌷</div>
+            <div class="blue-flower" style="font-size: 140px; margin: 0 15px;">🪷</div>
+            <div class="blue-flower">🌷</div>
+            <h2 style="font-family: 'Dancing Script'; color: var(--vintage-blue); font-size: 2.8rem; margin-top: 20px;">Forever Yours, Anica.</h2>
+            <p style="color: #7f8c8d; font-family: 'Quicksand'; letter-spacing: 1px;">My love for you knows no bounds, is patient, is gentle, does not boast, and is pure. May this day be a reminder for you that my prayers were answered the moment you messaged me with a kiss. 
+</p>
+<p style="color: #7f8c8d; font-family: 'Quicksand'; letter-spacing: 1px;">You are the one I see myself cooking breakfast for. </p>
+<p style="color: #7f8c8d; font-family: 'Quicksand'; letter-spacing: 1px;">I love you from Saturn and back, baby.</p>
+<p style="color: #7f8c8d; font-family: 'Quicksand'; letter-spacing: 1px;">Happy Valentine's Day, My Anica!</p>
+<p style="color: #7f8c8d; font-family: 'Quicksand'; letter-spacing: 1px;">Love, </p>
+<p style="color: #7f8c8d; font-family: 'Quicksand'; letter-spacing: 1px;">Erica <3 </p>
+
+        </div>
+    </div>
+
+    <script>
+        const reasons = [
+            "You came just in time into my life, you made it livable.",
+            "The way your name is my favorite notification.",
+            "How you are the 'only exception' to my every fear.",
+            "The way you handle the miles between us with so much strength.",
+            "Your laughter that sounds like home.",
+            "The way you say my name.",
+            "How you support my dreams as if they were your own.",
+            "The way you remember the smallest details I tell you.",
+            "Because you are my Anica, and there is no one else like you.",
+            "Because even in a room full of people, I'd still be looking for you.",
+            "You made me step out of my comfort zone and let myself be who I really am.",
+            "You made me learn how to be patient.",
+            "You made me appreciate the things I used not to.",
+            "You made me learn more about myself.",
+            "You know myself more than I do.",
+            "You made me believe that I could.",
+            "You taught me how to be gentle.",
+            "You led me whenever I am lost.",
+            "You were there when no one else was.",
+            "You stood with me :)",
+            "You understood me even when I cannot.",
+            "You make each of my days complete.",
+            "You make me feel loved.",
+            "You make me feel seen.",
+            "You make me feel valued.",
+            "You make me feel that I am the only woman in the world.",
+            "You make me feel that I deserve to be loved.",
+            "You made me realize that I only know how to love when it is you.",
+            "You make me feel that I am free to be who I am when you are around.",
+            "You make me happy in ways I did not expect.",
+            "You make me be me.",
+            "You are all I need to survive.",
+            "You are my oxygen.",
+            "You are the matcha in my early mornings.",
+            "You are my enervon :)",
+            "You are the one that made me believe in love again.",
+            "You are the one who proved to me that life is worth living because i have you in it."
+        ];
+
+        let currentIdx = 0;
+        const music = document.getElementById('bg-music');
+
+        function startExperience() {
+            // Play Music
+            music.play();
+            
+            // Transition out envelope
+            document.getElementById('envelope-stage').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('envelope-stage').style.display = 'none';
+                document.getElementById('reasons-stage').style.display = 'flex';
+                updateReason();
+            }, 800);
+        }
+
+        function updateReason() {
+            document.getElementById('count-display').innerText = `Reasons why I love you`;
+            document.getElementById('reason-display').innerText = reasons[currentIdx];
+        }
+
+        function nextReason() {
+            currentIdx++;
+            if (currentIdx < reasons.length) {
+                updateReason();
+            } else {
+                document.getElementById('reasons-stage').style.display = 'none';
+                document.getElementById('bouquet-stage').style.display = 'flex';
+            }
+        }
+
+        function celebrate() {
+            document.getElementById('final-question').style.display = 'none';
+            document.getElementById('flower-window').style.display = 'block';
+        }
+
+        // Generate Hearts
+        const heartsCont = document.getElementById('hearts-container');
+        for (let i = 0; i < 18; i++) {
+            const h = document.createElement('div');
+            h.className = 'heart'; h.innerHTML = '💙';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDelay = Math.random() * 12 + 's';
+            heartsCont.appendChild(h);
+        }
+    </script>
+</body>
+</html>
